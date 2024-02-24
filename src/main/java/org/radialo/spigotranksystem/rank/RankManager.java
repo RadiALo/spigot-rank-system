@@ -3,20 +3,24 @@ package org.radialo.spigotranksystem.rank;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachment;
 import org.radialo.spigotranksystem.RankSystemPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
 public class RankManager {
     private static final String FILE_NAME = "ranks.yaml";
 
+    private final Map<UUID, PermissionAttachment> permissions = new HashMap<>();
     private final RankSystemPlugin plugin;
-
-    private File file;
-    private YamlConfiguration config;
+    private final File file;
+    private final YamlConfiguration config;
 
     public RankManager(RankSystemPlugin plugin) {
         this.plugin = plugin;
@@ -40,6 +44,33 @@ public class RankManager {
     }
 
     public void setRank(UUID uuid, Rank rank) {
+        if (Bukkit.getOfflinePlayer(uuid).isOnline()) {
+            Player player = Bukkit.getPlayer(uuid);
+
+            PermissionAttachment attachment;
+
+            if (permissions.containsKey(uuid)) {
+                attachment = permissions.get(uuid);
+            } else {
+                attachment = player.addAttachment(plugin);
+                permissions.put(uuid, attachment);
+            }
+
+            // Remove old rank permissions
+            if (player.hasPlayedBefore()) {
+                for (String permission : getRank(uuid).getPermissions()) {
+                    if (player.hasPermission(permission)) {
+                        attachment.unsetPermission(permission);
+                    }
+                }
+            }
+
+            // Add new rank permissions
+            for (String permission : rank.getPermissions()) {
+                attachment.setPermission(permission, true);
+            }
+        }
+
         config.set(uuid.toString(), rank.name());
 
         try {
@@ -53,7 +84,7 @@ public class RankManager {
         if (player.isOnline()) {
             plugin.getNametagManager()
                     .removeTag(Objects.requireNonNull(player.getPlayer()));
-            
+
             plugin.getNametagManager()
                     .newTag(Objects.requireNonNull(player.getPlayer()));
         }
