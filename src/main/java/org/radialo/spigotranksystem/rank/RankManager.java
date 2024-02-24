@@ -16,7 +16,6 @@ import java.util.UUID;
 
 public class RankManager {
     private static final String FILE_NAME = "ranks.yaml";
-
     private final Map<UUID, PermissionAttachment> permissions = new HashMap<>();
     private final RankSystemPlugin plugin;
     private final File file;
@@ -46,7 +45,6 @@ public class RankManager {
     public void setRank(UUID uuid, Rank rank) {
         if (Bukkit.getOfflinePlayer(uuid).isOnline()) {
             Player player = Bukkit.getPlayer(uuid);
-
             PermissionAttachment attachment;
 
             if (permissions.containsKey(uuid)) {
@@ -79,14 +77,14 @@ public class RankManager {
             e.printStackTrace();
         }
 
-        OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+        if (Bukkit.getOfflinePlayer(uuid).isOnline()) {
+            Player player = Bukkit.getPlayer(uuid);
 
-        if (player.isOnline()) {
+            assert player != null;
             plugin.getNametagManager()
-                    .removeTag(Objects.requireNonNull(player.getPlayer()));
-
+                    .removeTag(player);
             plugin.getNametagManager()
-                    .newTag(Objects.requireNonNull(player.getPlayer()));
+                    .newTag(player);
         }
     }
 

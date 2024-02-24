@@ -1,0 +1,8 @@
+org\radialo\spigotranksystem\nametag\NametagManager.class
+org\radialo\spigotranksystem\rank\RankListener.class
+org\radialo\spigotranksystem\rank\RankManager.class
+org\radialo\spigotranksystem\donate\DonateManager.class
+org\radialo\spigotranksystem\RankSystemPlugin.class
+org\radialo\spigotranksystem\rank\RankCommand.class
+org\radialo\spigotranksystem\donate\DonateCommand.class
+org\radialo\spigotranksystem\rank\Rank.class

@@ -21,11 +21,12 @@ public class RankListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
+        plugin.getNametagManager().setNametags(player);
+
         if (!player.hasPlayedBefore()) {
             plugin.getRankManager().setRank(player.getUniqueId(), Rank.COPPER);
         }
 
-        plugin.getNametagManager().setNametags(player);
         plugin.getNametagManager().newTag(player);
     }
 

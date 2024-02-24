@@ -21,18 +21,17 @@ public class NametagManager {
 
         for (Rank rank : Rank.values()) {
             Team team = player.getScoreboard().registerNewTeam(rank.name());
-            team.setSuffix(ChatColor.BOLD + rank.getDisplay() + " " + ChatColor.RESET);
+            team.setPrefix(ChatColor.BOLD + rank.getDisplay() + " " + ChatColor.RESET);
         }
 
         for (Player target : Bukkit.getOnlinePlayers()) {
-
             if (target.getUniqueId().equals(player.getUniqueId())) {
                 continue;
             }
 
             Rank rank = plugin.getRankManager().getRank(target.getUniqueId());
 
-            Objects.requireNonNull(player.getScoreboard().getTeam(rank.name()))
+            player.getScoreboard().getTeam(rank.name())
                     .addEntry(target.getName());
         }
     }
@@ -47,11 +46,12 @@ public class NametagManager {
     }
 
     public void removeTag(Player player) {
-        Rank rank = plugin.getRankManager().getRank(player.getUniqueId());
-
         for (Player target : Bukkit.getOnlinePlayers()) {
-            Objects.requireNonNull(target.getScoreboard().getEntryTeam(rank.name()))
-                    .removeEntry(player.getName());
+            Team entryTeam = target.getScoreboard().getEntryTeam(player.getName());
+
+            if (entryTeam != null) {
+                entryTeam.removeEntry(player.getName());
+            }
         }
     }
 }
