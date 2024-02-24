@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.radialo.spigotranksystem.RankSystemPlugin;
 
 public class RankListener implements Listener {
@@ -23,6 +24,14 @@ public class RankListener implements Listener {
         if (!player.hasPlayedBefore()) {
             plugin.getRankManager().setRank(player.getUniqueId(), Rank.COPPER);
         }
+
+        plugin.getNametagManager().setNametags(player);
+        plugin.getNametagManager().newTag(player);
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        plugin.getNametagManager().removeTag(event.getPlayer());
     }
 
     @EventHandler
