@@ -42,8 +42,9 @@ public class RankListener implements Listener {
         Player player = event.getPlayer();
 
         Bukkit.broadcastMessage(
-                plugin.getRankManager().getRank(player.getUniqueId()).getDisplay()
-                + " " + player.getName() + ": " + ChatColor.GRAY + event.getMessage()
+                ChatColor.BOLD + plugin.getRankManager().getRank(player.getUniqueId()).getDisplay()
+                        + ChatColor.RESET + " " + player.getName() + ": "
+                        + ChatColor.GRAY + event.getMessage()
         );
     }
 }
