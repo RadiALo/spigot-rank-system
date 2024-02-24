@@ -12,5 +12,11 @@ public final class RankSystemPlugin extends JavaPlugin {
     public void onEnable() {
         Objects.requireNonNull(getCommand("rank"))
                 .setExecutor(new RankCommand());
+
+        Bukkit.getPluginManager().registerEvents(new RankListener(this), this);
+    }
+
+    public RankManager getRankManager() {
+        return rankManager;
     }
 }
