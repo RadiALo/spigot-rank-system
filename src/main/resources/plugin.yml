@@ -4,3 +4,5 @@ main: org.radialo.spigotranksystem.RankSystemPlugin
 api-version: '1.20'
 authors: [RadiALo]
 description: My rank system plugin!
+commands:
+  rank:
