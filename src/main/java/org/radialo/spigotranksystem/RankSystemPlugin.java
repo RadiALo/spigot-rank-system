@@ -2,6 +2,9 @@ package org.radialo.spigotranksystem;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.radialo.spigotranksystem.rank.RankCommand;
+import org.radialo.spigotranksystem.rank.RankListener;
+import org.radialo.spigotranksystem.rank.RankManager;
 
 import java.util.Objects;
 

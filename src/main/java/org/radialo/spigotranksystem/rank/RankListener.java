@@ -1,9 +1,13 @@
-package org.radialo.spigotranksystem;
+package org.radialo.spigotranksystem.rank;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.radialo.spigotranksystem.RankSystemPlugin;
 
 public class RankListener implements Listener {
     private RankSystemPlugin plugin;
@@ -19,5 +23,17 @@ public class RankListener implements Listener {
         if (!player.hasPlayedBefore()) {
             plugin.getRankManager().setRank(player.getUniqueId(), Rank.COPPER);
         }
+    }
+
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent event) {
+        event.setCancelled(true);
+
+        Player player = event.getPlayer();
+
+        Bukkit.broadcastMessage(
+                plugin.getRankManager().getRank(player.getUniqueId()).getDisplay()
+                + " " + player.getName() + ": " + ChatColor.GRAY + event.getMessage()
+        );
     }
 }

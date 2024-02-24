@@ -1,4 +1,4 @@
-package org.radialo.spigotranksystem;
+package org.radialo.spigotranksystem.rank;
 
 import org.bukkit.ChatColor;
 

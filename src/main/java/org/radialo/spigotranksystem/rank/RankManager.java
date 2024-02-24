@@ -1,6 +1,7 @@
-package org.radialo.spigotranksystem;
+package org.radialo.spigotranksystem.rank;
 
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.radialo.spigotranksystem.RankSystemPlugin;
 
 import java.io.File;
 import java.io.IOException;
